@@ -1,0 +1,177 @@
+\documentclass{ctexart}
+
+\usepackage{amsmath}
+\usepackage{geometry}
+
+\geometry{left = 2.0cm, right = 2.0cm , top = 3.0 cm , bottom =3.0 cm}
+
+\begin{document}
+    \title{计算物理第一次作业}
+    \author{钱思天 1600011388}
+    \maketitle
+
+    \section{数值误差}
+    \subsection{}
+    不妨假设每次加法给出的误差为$\epsilon_i$，有：
+    \begin{align*}
+        &(\cdots((x_i\oplus x_2)\oplus x_3)\oplus\cdots)\oplus x_N)\\
+        =&(\cdots((x_i+ x_2)(1+\epsilon_1)\oplus x_3)\oplus\cdots)\oplus x_N)\\
+        =&\cdots
+    \end{align*}
+    略去高阶项，有：
+    \begin{align*}
+        &(\cdots((x_i\oplus x_2)\oplus x_3)\oplus\cdots)\oplus x_N)\\
+        =&((\sum_{i=1}^N{x_i})+(x_1+x_2)\epsilon_1+\cdots+(\sum_{i=1}^N{x_i})\epsilon_{N-1})
+    \end{align*}
+    为进行数量级估计，取$\epsilon_i\sim \frac{\epsilon}{2}$，且将$x_i$以$\bar{|x|}$做数量级估计：
+    \begin{align*}
+        \epsilon_{sum}\sim\frac{(N+2)(N-1)}{2}*\frac{\epsilon}{2}\bar{|x|}
+    \end{align*}
+    对于均值$\bar{x}$，有：
+    \begin{align*}
+        \epsilon_{\bar{x}}&\sim\frac{(N+2)(N-1)}{2N}*\frac{\epsilon}{2}\bar{|x|}\\
+        |\frac{\epsilon_{\bar{x}}}{\bar{x}}|&\sim\frac{(N+2)(N-1)}{2N}*\frac{\epsilon}{2}
+    \end{align*}
+    \subsection{}
+    对于两种计算样本方差的算式，由于要避免大数相消，应该要采用第二种计算方式。
+    \subsection{}
+    $k=0$时：
+    $$\int_0^1\frac{1}{x+5}dx=\ln{\frac{6}{5}}$$
+    $k\geq1$时：
+    \begin{align*}
+        I_k&=\int_0^1\frac{x^k}{x+5}dx\\
+        &=\frac{1}{6(k+1)}+\frac{1}{k+1}\int_0^1\frac{x^{k+1}}{(x+5)^2}dx
+    \end{align*}
+    可得关系式：
+    $$\int_0^1\frac{x^{k+1}}{(x+5)^2}dx=(k+1)I_k-\frac{1}{6}$$
+    又有：
+    $$\int_0^1\frac{x^{k+1}}{(x+5)^2}dx=I_k-5\int_0^1\frac{x^{k}}{(x+5)^2}$$
+    联立可得：
+    $$(k+1)I_k-\frac{1}{6}=I_k-5(kI_{k-1}-\frac{1}{6})$$
+    整理后有：
+    $$I_k+5I_{k-1}=\frac{1}{k}$$
+    如果计算$I_0$时，有一个绝对误差$\epsilon$，那么，在计算$I_k$的时候，每一步计算，都会把误差放大五倍。同时，$I_k$并不能以这么快的速度增长，相对误差会放大，因此算法不是稳定的。
+    \section{矩阵的模和条件数}：
+    \subsection{}
+    由于矩阵的对角线全是1，上三角部分全是-1，同时是上三角矩阵，因此：
+    $$det(A)=\prod_{i=1}^{N}A_{ii}=1$$
+    矩阵的行列式不为零，证明矩阵不是奇异矩阵。
+    \subsection{}
+    考虑这样一种求逆方式，由于
+    $$if:BA=I,then:BI=A^{-1}$$
+    即，如果我对矩阵$A$求逆，假设一系列基本变换（即线性变换，i.e.调换行顺序或调换列顺序或将一行/列乘以一定倍数加到另一行/列上）能使$A$变为单位阵，那么，同样的一系列操作作用在单位阵$I$上，就可以变为$A$的逆矩阵。
+    \par
+    按照这一流程，下考虑将$A$变成单位阵的基本变换组合：
+    $$
+        A=
+        \left(
+            \begin{matrix}
+                1&-1&\cdots&-1\\
+                0&1&\cdots&-1\\
+                \vdots&\vdots&\ddots&\vdots\\
+                0&\cdots&\cdots&1
+            \end{matrix}
+        \right)
+    $$
+    因而将$A$变成单位阵$I$，首先把第一列加到之后的每一列上，然后把第二列加到之后的每一列上……
+    \par
+    将相同的操作作用在单位阵上，可以得到A的逆矩阵：
+    $$
+        A^{-1}=
+        \left(
+            \begin{matrix}
+                1&1&\cdots&2^{n-1}\\
+                0&1&\cdots&2^{n-2}\\
+                \vdots&\vdots&\ddots&\vdots\\
+                0&\cdots&\cdots&1
+            \end{matrix}
+        \right)
+    $$
+    将具体的矩阵元表示出来，就是：
+    \begin{align*}
+        A^{-1}_{ii}&=1;\\
+        A^{-1}_{ij}&=0,j<i\\
+        A^{-1}_{ij}&=2^{j-i-1},j>i;
+    \end{align*}
+    \subsection{}
+    当$p\to\infty$时，矩阵$p-$模的定义式为：
+    $$||A||_{\infty}=\lim_{p\to\infty}{\sup_{x\neq0}{\frac{||Ax||_p}{||x||_p}}}$$
+    向量的$\infty$模取值如下：
+    $$||v||_{\infty}=\max{(|v_i|)}$$
+    因此，对于矩阵的无穷模，首先考虑这样的诱导向量$x$的集合$X$：
+    $$X=\{x;\forall 1\leq i \leq N,|x_i|=1\}$$
+    则有$|x|_{\infty}=1$，又有：我们总可以选择各$x_i$的符号与$A$的每一行中各个元素匹配，故有：
+    $$\forall 1\leq i \leq N,\sum_{j=1}^{N}{A_{ij}x_j}\leq\sum_{j=1}^{N}{|A_{ij}|}$$
+    总能适当选取$x\in X$使得等号成立。可得：
+    $$\sup_{x\in X}{||Ax||_{\infty}}=\max_{1\leq i \leq N}{\sum_{j=1}^{N}{|A_{ij}|}}$$
+    即：
+    $$\sup_{x\in X}\frac{||Ax||_{\infty}}{||x||_\infty}=\max_{1\leq i \leq N}{\sum_{j=1}^{N}{|A_{ij}|}}$$
+    对于任意的各分量绝对值相等的诱导矢量$y$可按上述过程计算，只不过$||y||_\infty$和$||Ay||_\infty$都乘上一个因子，比值的上确界不变。
+    
+    \par
+    对于各分量不都相等的诱导矢量$z$，不妨设分量绝对值最大值为$M$，即$||z||_\infty=M$。对于$Az$的各个分量，有：
+    \begin{align*}
+    &|\sum_{j=1}^{N}{A_{ij}{z_j}}|\\
+    \leq&\sum_{j=1}^{N}{|A_{ij}{z_j}|}\\
+    \leq&\sum_{j=1}^{N}{|A_{ij}M|}\\
+    =&M\sum_{j=1}^N{|A_{ij}|}
+    \end{align*}
+    有
+    $$\sup_{||z||_\infty=M}\frac{||Az||_{\infty}}{||z||_\infty}\leq\max_{1\leq i \leq N}{\sum_{j=1}^{N}{|A_{ij}|}}$$
+    \par
+    综上，有：
+    $$\sup_{x}\frac{||Ax||_{\infty}}{||x||_\infty}=\max_{1\leq i \leq N}{\sum_{j=1}^{N}{|A_{ij}|}}$$
+    证毕。
+    \subsection{}
+    对于矢量$x$，其欧式模可以用内积$(,)$的形式给出：
+    $$||x||_2=\sqrt{(x,x)}$$
+    那么，对于幺正矩阵$U$，对任意矢量$x$，都有：
+    \begin{align*}
+        &||Ux||_2\\
+        =&\sqrt{(Ux,Ux)}\\
+        =&\sqrt{(U^{\dagger}Ux,x)}\\
+        =&\sqrt{(x,x)}
+    \end{align*}
+    换而言之，$$||U||_2=1$$同理，$$||U^{\dagger}||_2=1$$
+    同时，由于$\forall x$有：
+    \begin{align*}
+        &||UAx||_2\\
+        =&\sqrt{(UAx,UAx)}\\
+        =&\sqrt{(U^{\dagger}UAx,Ax)}\\
+        =&\sqrt{(Ax,Ax)}\\
+        =&||Ax||_2
+    \end{align*}
+    也可得$||UA||_2=||A||_2$，对条件数有$K_2(A)=K_2(UA)$。
+    \subsection{}
+    \begin{align*}
+        &K_\infty(A)\\
+        =&||A||_\infty*||A^{-1}||_\infty\\
+        =&n2^n
+    \end{align*}
+    \section{Hilbert Matrix}
+    \subsection{}
+    原问题为：
+    $$\min_{\vec{c}}D=\min_{\forall c_i}{\int_0^1(\sum_{i=1}^{n}c_ix^{i-1}-f(x))^2}$$
+    可得关系式：
+    $$\frac{\partial D}{\partial c_i}=0$$
+    即：
+    $$\int_0^1dx\sum_{j=1}^{n}c_jx^{j-1}*x^{i-1}=\int_0^1dxf(x)x^{i-1}$$
+    换而言之：
+    $$H_{ij}=\int_0^1x^{i+j-2}=\frac{1}{i+j-1}$$
+    $$b_i=\int_0^1f(x)x^{i-1}$$
+    \subsection{}
+    对任意向量$v_i$，则二次型：
+    \begin{align*}
+        &v^THv\\
+        =&\sum_{i=1}^{N}\sum_{j=1}^{N}{\frac{v_iv_j}{i+j-1}}\\
+        =&\int_0^1\sum_{i,j}t^{i+j-2}*v_iv_jdt\\
+        =&\int_0^1(\sum_{i}{v_it^{i-1}})^2dt\geq0
+    \end{align*}
+    即Hilbert Matrix是正定的。
+    \subsection{}
+    为了估算Hilbert Matrix的行列式，根据计算式，取对数，有：
+    $$\ln{(\det{(H_n)})}=4\sum_{i=1}^{n-1}{\ln{i!}}-\sum_{j=1}^{2n-1}{\ln{j!}}$$
+    $n>1$时利用斯特林公式$n!=\sqrt{2\pi n}{(\frac{n}{e})^2}$（相关讨论见附录），可以得到估计值如下：
+    
+
+\end{document}
