@@ -2,6 +2,7 @@
 
 \usepackage{amsmath}
 \usepackage{geometry}
+\usepackage{booktabs}
 
 \geometry{left = 2.0cm, right = 2.0cm , top = 3.0 cm , bottom =3.0 cm}
 
@@ -170,8 +171,28 @@
     即Hilbert Matrix是正定的。
     \subsection{}
     为了估算Hilbert Matrix的行列式，根据计算式，取对数，有：
-    $$\ln{(\det{(H_n)})}=4\sum_{i=1}^{n-1}{\ln{i!}}-\sum_{j=1}^{2n-1}{\ln{j!}}$$
-    $n>1$时利用斯特林公式$n!=\sqrt{2\pi n}{(\frac{n}{e})^2}$（相关讨论见附录），可以得到估计值如下：
-    
+    $$\ln{(\det{(H_n)})}=4\sum_{i=2}^{n-1}{\ln{i!}}-\sum_{j=2}^{2n-1}{\ln{j!}}$$
+    $n>1$时利用斯特林公式$n!=\sqrt{2\pi n}{(\frac{n}{e})^n}$（相关讨论见附录），可以得到估计值如下：
+    \begin{table}[htbp]
+        \centering
+        \begin{tabular}{rrr}
+            \toprule
+             n &     $\ln{|H_n|}$ &           $|H_n|$ \\
+            \midrule
+            1 &    0.000000 &  1.000000e+00 \\
+            2 &   -2.415888 &  8.928801e-02 \\
+            3 &   -7.736772 &  4.364781e-04 \\
+            4 &  -15.759086 &  1.431911e-07 \\
+            5 &  -26.516797 &  3.047203e-12 \\
+            6 &  -40.024225 &  4.146675e-18 \\
+            7 &  -56.288751 &  3.581839e-25 \\
+            8 &  -75.314679 &  1.955467e-33 \\
+            9 &  -97.104737 &  6.728970e-43 \\
+            10 & -121.660763 &  1.456806e-53 \\
+            \bottomrule
+            \end{tabular}
+    \end{table}
+    \subsection{}
+    利用两种不同方法解方程得到的解如下：
 
 \end{document}
