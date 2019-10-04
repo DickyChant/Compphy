@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{geometry}
 \usepackage{booktabs}
+\usepackage{graphicx}
 
 \geometry{left = 2.0cm, right = 2.0cm , top = 3.0 cm , bottom =3.0 cm}
 
@@ -194,5 +195,89 @@
     \end{table}
     \subsection{}
     利用两种不同方法解方程得到的解如下：
-
+    \begin{enumerate}
+        \item n=1
+        \begin{enumerate}
+            \item GEM\newline
+            ( 1.0000 )
+            \item Cholesky\newline
+            ( 1.0000 )
+        \end{enumerate}
+        \item n=2
+        \begin{enumerate}
+            \item GEM\newline
+            ( -2.0000, 6.0000 )
+            \item Cholesky\newline
+            ( -2.0000, 6.0000 )
+        \end{enumerate}
+        \item n=3
+        \begin{enumerate}
+            \item GEM\newline
+            ( 3.0000, -24.0000, 30.0000 )
+            \item Cholesky\newline
+            ( 3.0000, -24.0000, 30.0000 )
+        \end{enumerate}
+        \item n=4
+        \begin{enumerate}
+            \item GEM\newline
+            ( -4.0000, 60.0000, -180.0000, 140.0000 )
+            \item Cholesky\newline
+            ( -4.0000, 60.0000, -180.0000, 140.0000 )
+        \end{enumerate}
+        \item n=5
+        \begin{enumerate}
+            \item GEM\newline
+            ( 5.0000, -120.0000, 630.0000, -1120.0000, 630.0000 )
+            \item Cholesky\newline
+            ( 5.0000, -120.0000, 630.0000, -1120.0000, 630.0000 )
+        \end{enumerate}
+        \item n=6
+        \begin{enumerate}
+            \item GEM\newline
+            ( -6.0000, 210.0000, -1680.0000, 5040.0000, -6300.0000, 2772.0000 )
+            \item Cholesky\newline
+            ( -6.0000, 210.0000, -1680.0000, 5040.0000, -6300.0000, 2772.0000 )
+        \end{enumerate}
+        \item n=7
+        \begin{enumerate}
+            \item GEM\newline
+            ( 7.0000, -336.0000, 3780.0000, -16800.0001, 34650.0001, -33264.0001, 12012.0000 )
+            \item Cholesky\newline
+            ( 7.0000, -336.0000, 3780.0000, -16800.0001, 34650.0001, -33264.0001, 12012.0000 )
+        \end{enumerate}
+        \item n=8
+        \begin{enumerate}
+            \item GEM\newline
+            ( -8.0000, 504.0000, -7559.9998, 46199.9991, -138599.9973, 216215.9960, -168167.9970, 51479.9991 )
+            \item Cholesky\newline
+            ( -8.0000, 504.0000, -7559.9998, 46199.9989, -138599.9969, 216215.9954, -168167.9966, 51479.9990 )
+        \end{enumerate}
+        \item n=9
+        \begin{enumerate}
+            \item GEM\newline
+            ( 8.9999, -719.9962, 13859.9351, -110879.5319, 450448.2691, -1009004.4428, 1261255.8924, -823677.5075, 218789.3817 )
+            \item Cholesky\newline
+            ( 8.9999, -719.9957, 13859.9269, -110879.4726, 450448.0491, -1009003.9891, 1261255.3671, -823677.1880, 218789.3023 )
+        \end{enumerate}
+        \item n=10
+        \begin{enumerate}
+            \item GEM\newline
+            ( -9.9980, 989.8301, -23756.3837, 240207.1395, -1261103.3278, 3783349.4733, -6726013.8839, 7000597.8401, -3937861.9782, 923701.2873 )
+            \item Cholesky\newline
+            ( -9.9938, 989.4539, -23748.1253, 240130.1994, -1260728.8024, 3782302.1150, -6724270.1513, 6998891.2685, -3936956.0905, 923500.1211 )
+        \end{enumerate}
+    \end{enumerate}
+    可以看出，两者的解有细微的差别，我认为用GEM给出的解更好，原因中重要的一点是我自己实现的牛顿法开方\par
+    若不考虑开方引起的误差，我认为Cholesky应该可以给出更好的解，原因是输出前几个解答（此时牛顿法给出的平方根也更准确）的高精度数值时，会发现GEM的偏差较大。关于这一点，我认为是由于GEM加减中的舍入误差导致。
+\newpage{}
+    \appendix{附录：关于斯特林公式近似的有效性}
+    \newline
+   
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\textwidth]{Stirling.pdf}
+        \caption{利用Mathematica所绘制的Stirling近似和直接计算阶乘对数的比较}
+        \label{fig:1}
+    \end{figure}
+    如图所见，当$x\geq2$时，Stirling近似可以给出很好的近似，而$x=1$时，对数是零，事实上原式中我们可以直接从$n=2$求和。
 \end{document}
